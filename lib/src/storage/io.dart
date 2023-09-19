@@ -129,15 +129,14 @@ class StorageImpl {
   }
 
   Future<File> _fileDb({required bool isBackup}) async {
-    final dir = await _getImplicitDir();
-    final _path = await _getPath(isBackup, path ?? dir.path);
+    final _path = await _getPath(isBackup, path ?? (await _getImplicitDir()).path);
     final _file = File(_path);
     return _file;
   }
 
   Future<Directory> _getImplicitDir() async {
     try {
-      return getApplicationDocumentsDirectory();
+      return getApplicationSupportDirectory();
     } catch (err) {
       throw err;
     }
